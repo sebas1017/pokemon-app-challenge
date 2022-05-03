@@ -1,4 +1,4 @@
-version: '2'
+version: '3'
 services:
   pokemon-api-service:
     build: ./backend-pokemon-app/backend

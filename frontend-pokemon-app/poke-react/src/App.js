@@ -29,8 +29,8 @@ class App extends Component {
   }
 
   getMorePokemon() {
-    let url = "https://backend-pokemon-app.herokuapp.com/api/v1/all_pokemons"
-    console.log(url);
+    let url_deploy_config = process.env.REACT_APP_URL_PRODUCTION;
+    let url = url_deploy_config + "/api/v1/all_pokemons";
     fetch(url)
     .then(response => response.json())
     .then(data => {

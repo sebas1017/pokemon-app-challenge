@@ -7,8 +7,8 @@ import swal from 'sweetalert';
 const PokeCard = ({pokemon}) => {
 
   function getAbilitie(e) {
-   
-    const url = `https://backend-pokemon-app.herokuapp.com/api/v1/names_abilities/${e}`
+    let url_deploy_config = process.env.REACT_APP_URL_PRODUCTION;
+    const url = url_deploy_config+"/api/v1/names_abilities/"+e
     fetch(url)
     .then(response => response.json())
     .then(data => {
@@ -20,7 +20,8 @@ const PokeCard = ({pokemon}) => {
         swal("Se produjo un error en la API externa poke api intente nuevamente.")
       }
     })
-    .catch(console.log)
+    .catch( swal("Se produjo un error en la API externa poke api intente nuevamente.")
+  )
   
   }
 
