@@ -20,6 +20,8 @@ docker build -t backend_pokemon .
 ```
 
 
+
+
 este comando debe ser ejecutado en la raiz del directorio backend-pokemon-app/backend  ya que el . indica que el dockerfile se encuentra ahi.
 
 una vez echo esto se crea un contenedor a partir de la imagen construida anteriormente
@@ -56,34 +58,36 @@ el entorno en que se quiere ejecutar ya que esta forma de crear los containers
 por separado fue necesaria para desplegar el proyecto en heroku de forma gratuita el cual no acepta docker-compose
 
 para desplegar en heroku debe tener una cuenta creada y ejecutar los siguientes comandos:
+    ```
+    BACKEND:
+    ubicarse en la ruta backend-pokemon-app/backend al nivel del Dockerfile y ejecutar:
+        heroku login
+        heroku container:login
+        heroku create backend-app-myapp-poke  #o el nombre que desee
+        heroku container:push web -a backend-app-myapp-poke
+        heroku container:release web -a backend-app-myapp-poke  #esto despliega
 
-BACKEND:
-ubicarse en la ruta backend-pokemon-app/backend al nivel del Dockerfile y ejecutar:
-    heroku login
-    heroku container:login
-    heroku create backend-app-myapp-poke  #o el nombre que desee
-    heroku container:push web -a backend-app-myapp-poke
-    heroku container:release web -a backend-app-myapp-poke  #esto despliega
-
-FRONTEND:
-ubicarse en la ruta frontend-pokemon-app/poke-react al nivel del Dockerfile y ejecutar:
-    heroku login
-    heroku container:login
-    heroku create frontend-app-myapp-poke  #o el nombre que desee
-    heroku container:push web -a frontend-app-myapp-poke
-    heroku container:release web -a frontend-app-myapp-poke  #esto despliega
+    FRONTEND:
+    ubicarse en la ruta frontend-pokemon-app/poke-react al nivel del Dockerfile y ejecutar:
+        heroku login
+        heroku container:login
+        heroku create frontend-app-myapp-poke  #o el nombre que desee
+        heroku container:push web -a frontend-app-myapp-poke
+        heroku container:release web -a frontend-app-myapp-poke  #esto despliega
 
 
+    ```
 y con esto obtendremos en 2 servidores distintos el frontend y el backend
 si por otro lado se desea ejecutar localmente en 2 containers pero en la misma maquina entonces hacer uso de la configuracion de docker-compose de la siguiente manera:
 
+```
 en la ruta frontend-pokemon-app/poke-react/components en el archivo PokeCard.js
 reemplazar process.env.REACT_APP_URL_PRODUCTION por process.env.REACT_APP_URL_DEVELOPMENT
 
 y en la ruta ruta frontend-pokemon-app/poke-react/src/App.js 
 reemplazar process.env.REACT_APP_URL_PRODUCTION 
 por process.env.REACT_APP_URL_DEVELOPMENT
-
+```
 esto hara que el frontend se comunique al servicio expuesto en docker-compose y no al desplegado en heroku, ya que desea ejecutarlo localmente
 
 esto solo se requiere para el frontend luego debe ubicarse en la raiz del proyecto al nivel del docker-compose.yml
