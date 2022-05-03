@@ -80,14 +80,14 @@ para desplegar en heroku debe tener una cuenta creada y ejecutar los siguientes 
 y con esto obtendremos en 2 servidores distintos el frontend y el backend
 si por otro lado se desea ejecutar localmente en 2 containers pero en la misma maquina entonces hacer uso de la configuracion de docker-compose de la siguiente manera:
 
-```
+
 en la ruta frontend-pokemon-app/poke-react/components en el archivo PokeCard.js
 reemplazar process.env.REACT_APP_URL_PRODUCTION por process.env.REACT_APP_URL_DEVELOPMENT
 
 y en la ruta ruta frontend-pokemon-app/poke-react/src/App.js 
 reemplazar process.env.REACT_APP_URL_PRODUCTION 
 por process.env.REACT_APP_URL_DEVELOPMENT
-```
+
 esto hara que el frontend se comunique al servicio expuesto en docker-compose y no al desplegado en heroku, ya que desea ejecutarlo localmente
 
 esto solo se requiere para el frontend luego debe ubicarse en la raiz del proyecto al nivel del docker-compose.yml
