@@ -58,7 +58,7 @@ el entorno en que se quiere ejecutar ya que esta forma de crear los containers
 por separado fue necesaria para desplegar el proyecto en heroku de forma gratuita el cual no acepta docker-compose
 
 para desplegar en heroku debe tener una cuenta creada y ejecutar los siguientes comandos:
-    ```
+    
     BACKEND:
     ubicarse en la ruta backend-pokemon-app/backend al nivel del Dockerfile y ejecutar:
         heroku login
@@ -76,7 +76,6 @@ para desplegar en heroku debe tener una cuenta creada y ejecutar los siguientes 
         heroku container:release web -a frontend-app-myapp-poke  #esto despliega
 
 
-    ```
 y con esto obtendremos en 2 servidores distintos el frontend y el backend
 si por otro lado se desea ejecutar localmente en 2 containers pero en la misma maquina entonces hacer uso de la configuracion de docker-compose de la siguiente manera:
 
