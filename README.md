@@ -13,16 +13,21 @@ cada servicio tiene un dockerfile que permite crear un container a partir de est
 
 para construir un contenedor del backend ejecutamos lo siguiente:
 
+```
 cd backend-pokemon-app/backend
-
-
 docker build -t backend_pokemon .
+
+```
+
 
 este comando debe ser ejecutado en la raiz del directorio backend-pokemon-app/backend  ya que el . indica que el dockerfile se encuentra ahi.
 
 una vez echo esto se crea un contenedor a partir de la imagen construida anteriormente
 
+
+```
 docker run -p 8000:8000 backend_pokemon
+```
 
 y luego podra ir a la ruta http://localhost:8000 y ver la API funcionando, para
 obtener documentacion de la api vaya a la ruta http://localhost:8000/docs
@@ -32,11 +37,15 @@ este proceso se debe seguir para desplegar el frontend en un container por separ
 
 este comando debe ser ejecutado en la raiz del directorio frontend-pokemon-app/poke-react   ya que el . indica que el dockerfile se encuentra ahi.
 
+```
 docker build -t frontend_pokemon .
+```
 
 una vez echo esto se crea un contenedor a partir de la imagen construida anteriormente
 
+```
 docker run -p 3000:3000 frontend_pokemon
+```
 
 y podra ir a la ruta http://localhost:3000 y podra ver el sitio web
 el cual internamente se conecta a la API que previamente ya se desplego en un container aparte y tiene expuesto el puerto 8000
