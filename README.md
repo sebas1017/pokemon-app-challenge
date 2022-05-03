@@ -1,3 +1,5 @@
+
+![alt text](https://github.com/sebas1017/pokemon-app-challenge/blob/main/fastapi.png?raw=true)
 POKEMON APP
 
 en esta app se tiene un dasboard con tarjetas de pokemones 
