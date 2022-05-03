@@ -6,7 +6,7 @@ POKEMON APP
 #URL  
 
 
-https://github.com/sebas1017/pokemon-app-challenge
+https://frontend-pokemon-app.herokuapp.com/
 en esta app se tiene un dasboard con tarjetas de pokemones 
 con nombre del pokemon, descripcion , y un boton VER HABILIDADES.
 
