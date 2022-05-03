@@ -95,8 +95,9 @@ REQUISITOS:
 tener instalado docker y docker-compose
 
 una vez teniendo estas herramientas ejecutar
-
+```
 docker-compose up -d
+```
 
 y cuando finalice el proceso ir a la ruta http://localhost:3000 y obtendra el sitio web el cual esta comunicandose con el container del puerto  8000 de la api pero esta vez los containers estan siendo gestionados por docker-compose
 
