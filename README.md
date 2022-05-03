@@ -14,6 +14,8 @@ cada servicio tiene un dockerfile que permite crear un container a partir de est
 para construir un contenedor del backend ejecutamos lo siguiente:
 
 cd backend-pokemon-app/backend
+
+
 docker build -t backend_pokemon .
 
 este comando debe ser ejecutado en la raiz del directorio backend-pokemon-app/backend  ya que el . indica que el dockerfile se encuentra ahi.
