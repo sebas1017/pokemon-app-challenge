@@ -26,7 +26,7 @@ async def root( ):
 
 
 @app.get("/api/v1/all_pokemons")
-async def root( response: Response):
+async def all_pokemons( response: Response):
     results = []
     try:
         for pokemon in pokemons:
