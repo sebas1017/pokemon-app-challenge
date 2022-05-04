@@ -1,7 +1,12 @@
 
 ![alt text](https://github.com/sebas1017/pokemon-app-challenge/blob/main/fastapi.png?raw=true)
+![alt text](https://github.com/sebas1017/pokemon-app-challenge/blob/main/docker.jpeg?raw=true)
+![alt text](https://github.com/sebas1017/pokemon-app-challenge/blob/main/react.png?raw=true)
 POKEMON APP
+#URL  
 
+
+https://frontend-pokemon-app.herokuapp.com/
 en esta app se tiene un dasboard con tarjetas de pokemones 
 con nombre del pokemon, descripcion , y un boton VER HABILIDADES.
 
