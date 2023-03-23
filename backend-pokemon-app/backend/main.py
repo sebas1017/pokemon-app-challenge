@@ -1,9 +1,17 @@
 #!/usr/bin/python
-from fastapi import FastAPI, Response
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 import requests
 import os 
 import uvicorn
+import asyncio
+import aiohttp
+import logging
+
+logger = logging.getLogger()
+logger.setLevel(logging.INFO)
+
+
 app = FastAPI()
 
 app.add_middleware(
@@ -25,50 +33,61 @@ async def root( ):
     return {"message":"Bienvenido a POKE-API construida en FASTAPI"}
 
 
-@app.get("/api/v1/all_pokemons")
-async def all_pokemons( response: Response):
+
+async def fetch(session, url):
+    async with session.get(url) as response:
+        if response.status == 200:
+            data_response = response.json()
+            return await data_response
+    return {}
+
+
+@app.get("/api/v1/all_pokemons", status_code=200)
+async def all_pokemons():
     results = []
     try:
-        for pokemon in pokemons:
-            response_pokemon = requests.get(f"https://pokeapi.co/api/v2/pokemon/{pokemon}")
-            response_description = requests.get(f"https://pokeapi.co/api/v2/pokemon-species/{pokemon}")
-            if response_pokemon.status_code ==200:
-                response.status_code==200
-                description_pokemon = response_description.json()["flavor_text_entries"][0]["flavor_text"]
-                data_final  = {"name":response_pokemon.json()["name"],
-                               "sprites":{
-                                   "front_default":response_pokemon.json()["sprites"]["front_default"],
-                                   "back_default":response_pokemon.json()["sprites"]["back_default"],
-                                   }}
-                data_final["description"] = description_pokemon
+        async with aiohttp.ClientSession() as session:
+            for pokemon in pokemons:
+                task_pokemon = asyncio.create_task( fetch(session, f"https://pokeapi.co/api/v2/pokemon/{pokemon}"))
+                task_description = asyncio.create_task( fetch(session, f"https://pokeapi.co/api/v2/pokemon-species/{pokemon}"))
+                response_pokemon, response_description = await asyncio.gather(task_pokemon, task_description)
+                
+                if response_description:
+                    description_pokemon = response_description["flavor_text_entries"][0]["flavor_text"]
+                    data_final = {
+                        "name": response_pokemon["name"],
+                        "sprites": {
+                            "front_default": response_pokemon["sprites"]["front_default"],
+                            "back_default": response_pokemon["sprites"]["back_default"],
+                        },
+                        "description": description_pokemon,
+                    }
+                else:
+                    data_final = {}
                 results.append(data_final)
-        return {"results":results}
-    except Exception:
-        response.status_code==500
-        return {"message":"Error interno en el servidor"}
-    
+            return {"results": results}
+    except Exception as e:
+        logger.error(f"Exception in function get_all_pokemons -> {e}")
+        raise HTTPException(status_code=500, detail="Error interno en el servidor")
+       
 
-
-@app.get("/api/v1/names_abilities/{pokemon}")
-async def names_abilities(pokemon: str, response: Response):
+@app.get("/api/v1/names_abilities/{pokemon}", status_code=200)
+async def names_abilities(pokemon: str):
     results=[]
     url = f"https://pokeapi.co/api/v2/pokemon/{pokemon}"
     try:
         data = requests.get(url)
         if data.status_code==200:
-            response.status_code = 200
             for result in data.json()["abilities"]:
                 results.append(result["ability"]["name"])
-            
             return {"results":results}
         if data.status_code == 404:
-            response.status_code = 404
-            return {"message":"el pokemon solicitado no existe"}
+            raise HTTPException(status_code=404, detail="el pokemon solicitado no existe")
         else:
-            response.status_code = 500
             return {"message":"servidor no disponible en este momento"}
     except Exception as e:
-        print(e)
+        logger.error(f"Exception in function names_abilities -> {e}")
+        raise HTTPException(status_code=500, detail="Error interno en el servidor")
 
 if __name__=="__main__":
     port = int(os.getenv("PORT") or 8000)
